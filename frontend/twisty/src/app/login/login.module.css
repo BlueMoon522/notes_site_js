@@ -1,0 +1,64 @@
+/* Full-page container to center the box */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh; /* Full viewport height */
+  width: 90vw; /* Full viewport width */
+  margin: 0; /* Remove any margin */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box; /* Ensures consistent sizing */
+}
+/*For login text*/
+.textLogin {
+  font-size: larger;
+  text-decoration: dashed;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+/* Centered box styling */
+.centered-box {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px; /* Square box height */
+  width: 300px; /* Square box width */
+  margin: 0 auto; /* Horizontally center */
+  padding: 20px;
+  background-color: #f5f5f5; /* Light gray background */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(169, 5, 68, 0.1); /* Soft shadow for depth */
+}
+
+/* Style the form inside the centered box */
+.form {
+  width: 100%; /* Full width of centered box */
+}
+
+/* Existing styles for text-field, label, etc. */
+.text-field input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 3px 3px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+.text-field input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.loginButton {
+  background-color: #007bff;
+  padding: 5px 50px;
+  border-radius: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}

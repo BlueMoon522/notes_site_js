@@ -1,0 +1,17 @@
+{
+  "name": "twisty",
+  "version": "1.0.0",
+  "description": "THE Twisty",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "author": "Nabin",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "hbs": "^4.2.0",
+    "mongoose": "^8.7.3"
+  }
+}
