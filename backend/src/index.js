@@ -1,21 +1,15 @@
 const express = require("express");
 const app = express();
-const path = require("path");
-const hbs = require("hbs");
-
+const PORT = 3000;
 const collection = require("./mongo");
 
-const templatePath = path.join(__dirname, "../templates");
 //res-request,response-res
 app.use(express.json());
-app.set("views", templatePath);
-app.set("view engine", "hbs");
-app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
-  res.render("login");
-});
-
+// app.get("/", (req, res) => {
+//   res.render("login");
+// });
+//
 app.post("/login", async (req, res) => {
 try {
  const check = await collection.findOne({name:req.body.name}) 
@@ -31,22 +25,22 @@ res.render("home")
 });
 
 
-app.post("/signup", async (req, res) => {
+app.post("/register", async (req, res) => {
+  const{email,password}=req.body;
   const data = {
-    name: req.body.name,
+    email: req.body.email,
     password: req.body.password,
   };
 
   await collection.insertMany([data]);
   console.log({ data });
-
-  res.render("home");
+  console.log(
+    'Received data:',{email,password}
+  );
+  res.status(200).json({message:"Successful Registration"})
 });
 
-app.get("/signup", (req, res) => {
-  res.render("signup");
-});
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("port connected");
 });
