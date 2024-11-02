@@ -3,6 +3,8 @@
 "use client"
 import { useState } from 'react';
 import styles from "./login.module.css";
+import Login from "./login/login.tsx"
+import Link from 'next/link';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -70,7 +72,7 @@ export default function Register() {
           </div>
 
           <div>
-            <label>Re-Enter Password</label>
+            <label>Re-Enter Passwords</label>
           </div>
           <div className={styles["text-field"]}>
             <input
@@ -91,6 +93,7 @@ export default function Register() {
             />
           </div>
         </form>
+        <p>Already have an Account?<Link href = "/login">Go to Login</Link></p>
       </div>
     </div>
   );

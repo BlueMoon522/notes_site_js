@@ -1,0 +1,70 @@
+/* SideNav.module.css */
+
+.container {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  height: 100vh;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  transition: width 0.3s ease;
+}
+
+.sidebarClosed {
+  width: 60px;
+}
+
+/* Styles when sidebar is open */
+.toggleButtonOpen {
+  background-color: #007bff; /* Blue color when open */
+  color: white;
+  border: none;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
+/* Styles when sidebar is closed */
+.toggleButtonClosed {
+  background-color: #ff6347; /* Red color when closed */
+  color: white;
+  border: none;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  margin-bottom: 20px;
+  padding: 5px;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+}
+
+.navList li {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.navList li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navList li a:hover {
+  color: #007bff;
+}
+
