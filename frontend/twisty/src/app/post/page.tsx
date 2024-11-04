@@ -1,18 +1,11 @@
 "use client";
-
+import styles from "./post.modules.css";
 import { useState } from "react";
 import Link from "next/link";
-import styles from "./dashboard.module.css";
-import { log } from "util";
 
-export default function Dashboard() {
-  const [isOpen, setIsOpen] = useState(true);
+export default function Post() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-
-  const toggleSidebar = () => setIsOpen(!isOpen);
-
-  //function to handle note submit
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,32 +43,6 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <div className={isOpen ? styles.sidebar : styles.sidebarClosed}>
-        {/* Conditional styling applied here based on isOpen */}
-        <button
-          className={
-            isOpen ? styles.toggleButtonOpen : styles.toggleButtonClosed
-          }
-          onClick={toggleSidebar}
-        >
-          {isOpen ? "←" : "→"}
-        </button>
-
-        <ul className={styles.navList}>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/post">Post</Link>
-          </li>
-          <li>
-            <Link href="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link href="/settings">Settings</Link>
-          </li>
-        </ul>
-      </div>
       <div className={styles.description}>
         <form onSubmit={handleSubmit} className={styles.form}>
           {/* Title Input */}
