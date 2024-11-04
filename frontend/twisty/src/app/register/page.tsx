@@ -3,8 +3,6 @@
 "use client"
 import { useState } from 'react';
 import styles from "./login.module.css";
-import Login from "./login/login.tsx"
-import Link from 'next/link';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -12,7 +10,7 @@ export default function Register() {
   const [repassword, setRepassword] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
     if (password !== repassword) {
       alert("Passwords do not match");
@@ -72,7 +70,7 @@ export default function Register() {
           </div>
 
           <div>
-            <label>Re-Enter Passwords</label>
+            <label>Re-Enter Password</label>
           </div>
           <div className={styles["text-field"]}>
             <input

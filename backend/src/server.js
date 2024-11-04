@@ -9,7 +9,7 @@ const app = express();
 // Enable CORS
 app.use(cors());
 app.use(express.json()); //to use req.body this is required,parses the json #middleware
-
+console.log("jack");
 app.use("/api/users", userRoutes);
 
 app.listen(5000, () => {
