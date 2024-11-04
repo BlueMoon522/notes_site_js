@@ -1,49 +1,110 @@
-"use client"; // This directive indicates that this component should be rendered on the client side only
+"use client";
 
-import { useState } from "react"; // Importing React's useState hook to manage component state
-import Link from "next/link"; // Importing Link component from Next.js for client-side navigation
-import styles from "./dashboard.module.css"; // Importing CSS module for component-specific styling
+import { useState } from "react";
+import Link from "next/link";
+import styles from "./dashboard.module.css";
+import { log } from "util";
 
-// Dashboard component definition
 export default function Dashboard() {
-  // State to manage the sidebar's open/closed state
   const [isOpen, setIsOpen] = useState(true);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  // Function to toggle sidebar open/closed
-  const toggleSidebar = () => {
-    setIsOpen((prevOpen) => !prevOpen); // Toggle the isOpen state between true and false
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
+  //function to handle note submit
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("This is where it went");
+    if (!title || !description) {
+      console.log("1This is where it went");
+      alert("Title , Description Required*");
+      return;
+    }
+    try {
+      const response = await fetch("http://localhost:5000/api/users/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title, description }),
+      });
+      console.log("2his is where it went");
+      const result = await response.json();
+      if (response.ok) {
+        alert("Posted succesfully");
+        console.log("3his is where it went");
+        setTitle("");
+        setDescription("");
+      } else {
+        console.log("4his is where it went");
+
+        alert(result.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("submission failed");
+    }
   };
 
   return (
     <div className={styles.container}>
-      {/* Sidebar div with conditional styling based on the isOpen state */}
       <div className={isOpen ? styles.sidebar : styles.sidebarClosed}>
-        {/* Toggle button for opening/closing the sidebar */}
+        {/* Conditional styling applied here based on isOpen */}
         <button
-          // Apply different button styles based on the sidebar's open/closed state
-          className={isOpen ? styles.toggleButtonOpen : styles.toggleButtonClosed}
-          onClick={toggleSidebar} // Toggle sidebar when button is clicked
+          className={
+            isOpen ? styles.toggleButtonOpen : styles.toggleButtonClosed
+          }
+          onClick={toggleSidebar}
         >
-          {isOpen ? "←" : "→"} {/* Display arrow based on open/closed state */}
+          {isOpen ? "←" : "→"}
         </button>
 
-        {/* Navigation list with links to different pages */}
         <ul className={styles.navList}>
           <li>
-            <Link href="/">Home</Link> {/* Link to Home page */}
+            <Link href="/">Home</Link>
           </li>
           <li>
-            <Link href="/about">About</Link> {/* Link to About page */}
+            <Link href="/about">About</Link>
           </li>
           <li>
-            <Link href="/services">Services</Link> {/* Link to Services page */}
+            <Link href="/services">Services</Link>
           </li>
           <li>
-            <Link href="/contact">Contact</Link> {/* Link to Contact page */}
+            <Link href="/contact">Contact</Link>
           </li>
         </ul>
+      </div>
+      <div className={styles.description}>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          {/* Title Input */}
+          <div className={styles.inputGroup}>
+            <label>Title:</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
+
+          {/* Paragraph Input */}
+          <div className={styles.inputGroup}>
+            <label>Paragraph:</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows="4"
+              required
+            />
+          </div>
+
+          <button type="submit" className={styles.submitButton}>
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );
 }
-

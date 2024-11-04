@@ -1,19 +1,14 @@
-/* SideNav.module.css */
-
+/* Container layout for the sidebar and content sections */
 .container {
   display: flex;
 }
 
+/* Sidebar styles */
 .sidebar {
   width: 200px;
   height: 100vh;
   background-color: #333;
   color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
   padding-top: 20px;
   transition: width 0.3s ease;
 }
@@ -22,49 +17,77 @@
   width: 60px;
 }
 
-/* Styles when sidebar is open */
 .toggleButtonOpen {
-  background-color: #007bff; /* Blue color when open */
+  background-color: #007bff;
   color: white;
   border: none;
   font-size: 18px;
-  margin-left: auto;
-  margin-right: auto;
   cursor: pointer;
-  margin-bottom: 20px;
   padding: 5px;
 }
 
-/* Styles when sidebar is closed */
 .toggleButtonClosed {
-  background-color: #ff6347; /* Red color when closed */
+  background-color: #ff6347;
   color: white;
   border: none;
   font-size: 18px;
-  margin-left: auto;
-  margin-right: auto;
   cursor: pointer;
-  margin-bottom: 20px;
   padding: 5px;
 }
 
+/* Navigation List */
 .navList {
   list-style: none;
   padding: 0;
+  margin-top: 20px;
 }
 
 .navList li {
-  margin: 20px 0;
-  text-align: center;
+  padding: 10px 15px;
+  cursor: pointer;
 }
 
-.navList li a {
+/* Content area styles */
+.description {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form styling */
+.form {
+  max-width: 400px;
+  width: 100%;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inputGroup {
+  margin-bottom: 15px;
+}
+
+.inputGroup label {
+  display: block;
+  font-weight: bold;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submitButton {
+  background-color: #007bff;
   color: white;
-  text-decoration: none;
-  font-size: 18px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
-
-.navList li a:hover {
-  color: #007bff;
-}
-

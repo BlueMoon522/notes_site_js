@@ -1,16 +1,16 @@
 //To:fix alert("An unexpected response was received."); gets trigreed even if the data is pushed to the database
- 
-"use client"
-import { useState } from 'react';
-import styles from "./login.module.css";
 
+"use client";
+import { useState } from "react";
+import styles from "./login.module.css";
+import Link from "next/link";
 export default function Register() {
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [repassword, setRepassword] = useState('');
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
     if (password !== repassword) {
       alert("Passwords do not match");
@@ -18,10 +18,10 @@ export default function Register() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/api/users", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, password, repassword }),
       });
@@ -35,8 +35,8 @@ export default function Register() {
         alert("An unexpected response was received.");
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while registering');
+      console.error("Error:", error);
+      alert("An error occurred while registering");
     }
   };
 
@@ -91,9 +91,10 @@ export default function Register() {
             />
           </div>
         </form>
-        <p>Already have an Account?<Link href = "/login">Go to Login</Link></p>
+        <p>
+          Already have an Account?<Link href="/login">Go to Login</Link>
+        </p>
       </div>
     </div>
   );
 }
-
