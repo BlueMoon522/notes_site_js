@@ -9,9 +9,7 @@ export default function Post() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("This is where it went");
     if (!title || !description) {
-      console.log("1This is where it went");
       alert("Title , Description Required*");
       return;
     }
@@ -23,16 +21,12 @@ export default function Post() {
         },
         body: JSON.stringify({ title, description }),
       });
-      console.log("2his is where it went");
       const result = await response.json();
       if (response.ok) {
         alert("Posted succesfully");
-        console.log("3his is where it went");
         setTitle("");
         setDescription("");
       } else {
-        console.log("4his is where it went");
-
         alert(result.message);
       }
     } catch (error) {
