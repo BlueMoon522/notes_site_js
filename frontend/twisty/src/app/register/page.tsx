@@ -28,7 +28,7 @@ export default function Register() {
 
       const result = await response.json();
       if (response.ok && result.message) {
-        alert("Response from server and result message both fine"); // Show success message from server
+        alert("Response from server and result  both fine"); // Show success message from server
       } else if (!response.ok && result.message) {
         alert("not ok result from server"); // Show error message from server
       } else {

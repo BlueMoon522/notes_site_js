@@ -20,8 +20,14 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ name });
     if (user && user.password === password) {
+      console.log("User ID:", user._id);
       // Assuming successful login
-      return res.status(200).json({ message: "Login successful!" });
+      return res.status(200).json({
+        message: "Login successful!",
+
+        userId: user._id, // Sending user ID to frontend
+        name: user.name,
+      });
     } else {
       // Invalid credentials
       return res.status(401).json({ message: "Invalid name or password" });

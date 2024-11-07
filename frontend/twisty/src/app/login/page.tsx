@@ -4,12 +4,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
+import Dashboard from "../dashboard/page";
 import Link from "next/link";
 export default function Login() {
-  // Define state variables to hold form data and error messages
   const [name, setName] = useState(""); // State to store the entered username
   const [password, setPassword] = useState(""); // State to store the entered password
   const [error, setError] = useState(""); // State to store any error messages for invalid login
+  const [userId, setUserId] = useState(null);
   const router = useRouter(); // Initialize Next.js router for client-side navigation
 
   // Handle form submission to authenticate user
@@ -27,12 +28,22 @@ export default function Login() {
       });
 
       const result = await response.json(); // Parse JSON response from the server
-
+      // console.log(result);
       if (response.ok) {
         // Check if the response status is 200 (successful login)
-        alert("Login successful");
-        setError(""); // Clear any existing error messages on successful login
-        router.push("/dashboard"); // Redirect user to the dashboard (or other protected route)
+        if (!result.userId) {
+          return;
+        } else {
+          console.log("reached here");
+
+          setUserId(result.userId); // Set userId on successful login);
+          alert("Login successful");
+          setError(""); // Clear any existing error messages on successful login
+
+          console.log(setError);
+
+          router.push("/dashboard"); // Redirect user to the dashboard (or other protected route)
+        }
       } else {
         // If login fails, display server error message, or a default message if undefined
         setError(result.message || "Login failed");
@@ -77,6 +88,8 @@ export default function Login() {
             Login
           </button>
         </form>
+        {/* Pass the userId to the Dashboard component as a prop */}
+        {userId && <Dashboard userId={userId} />}
         <p>
           Dont have Account?<Link href="/register">Go to Register</Link>
         </p>
