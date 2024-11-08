@@ -38,10 +38,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-//post the user
+//Create the user
 router.post("/", async (req, res) => {
   const user = req.body;
-  if (!user.name || !user.password || !user.repassword) {
+  if (!user.name || !user.password) {
     return res
       .status(400)
       .json({ sucess: false, message: "Please provide all fields" });
