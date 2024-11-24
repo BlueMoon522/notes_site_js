@@ -1,15 +1,25 @@
-import { mongoose } from "mongoose";
+// notes.model.js
+import mongoose from "mongoose";
 
-const postsSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const noteSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      // This references the user who created the note
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
-  description: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true },
+);
 
-const Note = mongoose.model("Note", postsSchema);
+const Note = mongoose.model("Note", noteSchema);
 export default Note;
