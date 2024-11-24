@@ -4,17 +4,17 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.css";
-import Dashboard from "../dashboard/page";
+
 import Link from "next/link";
 export default function Login() {
-  const [name, setName] = useState(""); // State to store the entered username
   const [password, setPassword] = useState(""); // State to store the entered password
   const [error, setError] = useState(""); // State to store any error messages for invalid login
-  const [userId, setUserId] = useState(null);
+  const [email, setEmail] = useState("");
+
   const router = useRouter(); // Initialize Next.js router for client-side navigation
 
   // Handle form submission to authenticate user
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault(); // Prevent default form submission behavior (page reload)
 
     try {
@@ -24,27 +24,30 @@ export default function Login() {
         headers: {
           "Content-Type": "application/json", // Specify JSON format for the request body
         },
-        body: JSON.stringify({ name, password }), // Convert form data into JSON format
+        body: JSON.stringify({ email, password }), // Convert form data into JSON format
+        credentials: "include", //include cookie in request
       });
 
       const result = await response.json(); // Parse JSON response from the server
-      // console.log(result);
+      console.log(result);
+      const token = result.token;
+      console.log("====================================");
+      console.log(token);
+      console.log("====================================");
+      //store token in browser
+      //  localStorage.setItem("authToken", token);//stores in localStorage not necessary
+      console.log("Token stored successfully!");
+
       if (response.ok) {
-        // Check if the response status is 200 (successful login)
-        if (!result.userId) {
-          return;
-        } else {
-          console.log("reached here");
+        alert("Login successful");
+        setError(""); // Clear any existing error messages on successful login
 
-          setUserId(result.userId); // Set userId on successful login);
-          alert("Login successful");
-          setError(""); // Clear any existing error messages on successful login
+        console.log(setError);
 
-          console.log(setError);
-
-          router.push("/dashboard"); // Redirect user to the dashboard (or other protected route)
-        }
-      } else {
+        router.push("/dashboard"); // Redirect user to the dashboard (or other protected route)
+      }
+      // Check if the response status is 200 (successful login)
+      else {
         // If login fails, display server error message, or a default message if undefined
         setError(result.message || "Login failed");
       }
@@ -68,8 +71,8 @@ export default function Login() {
           <div className={styles["text-field"]}>
             <input
               type="text" // Text input type for username
-              value={name} // Controlled component binding input value to state
-              onChange={(e) => setName(e.target.value)} // Update state on input change
+              value={email} // Controlled component binding input value to state
+              onChange={(e) => setEmail(e.target.value)} // Update state on input change
               required // Set input as required for form validation
             />
           </div>
@@ -89,7 +92,6 @@ export default function Login() {
           </button>
         </form>
         {/* Pass the userId to the Dashboard component as a prop */}
-        {userId && <Dashboard userId={userId} />}
         <p>
           Dont have Account?<Link href="/register">Go to Register</Link>
         </p>

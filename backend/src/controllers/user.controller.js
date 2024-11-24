@@ -1,5 +1,6 @@
 import User from "../models/users.models.js";
 import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 dotenv.config();
 const handleErrors = (error) => {
   console.log(error.message, error.code);
@@ -34,7 +35,8 @@ const maxAge = 3 * 24 * 60 * 60; //3-days in seconds
 //creating a JWT tokens
 
 const createTokens = (id) => {
-  return JsonWebTokenError.sign({ id }, "process.env.SECRET_KEY", {
+  console.log("Reached here");
+  return jwt.sign({ id }, "process.env.SECRET_KEY", {
     expiresIn: maxAge,
   });
 };
@@ -60,7 +62,8 @@ const userController = {
         httpOnly: true,
         maxAge: maxAge * 1000, //this is in milliseconds
       });
-      res.send(200).json({ user: user._id });
+      console.log(user._id);
+      res.status(200).json({ user: user._id });
     } catch (error) {
       const errors = handleErrors(error);
       res.status(400).json({ error });
@@ -72,12 +75,14 @@ const userController = {
     const { email, password } = req.body;
     try {
       const user = await User.login(email, password);
-      const token = createToken(user._id);
+      const token = createTokens(user._id);
+      console.log(token);
       res.cookie("jwt", token, {
         httpOnly: true,
         maxAge: maxAge * 1000,
       });
-      res.status(200).json({ user: user._id });
+      console.log(user._id);
+      res.status(200).json({ user: user._id, token });
     } catch (error) {
       const errors = handleErrors(error);
       res.status(400).json({ errors });

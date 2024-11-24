@@ -1,4 +1,4 @@
-//To:fix alert("An unexpected response was received."); gets trigreed even if the data is pushed to the database
+//To:fix alert("An unexpected response was received."); gets triggered even if the data is pushed to the database
 
 "use client";
 import { useState } from "react";
@@ -8,8 +8,9 @@ export default function Register() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
+  const [email, setEmail] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     if (password !== repassword) {
@@ -23,7 +24,7 @@ export default function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, password, repassword }),
+        body: JSON.stringify({ name, password, email, repassword }),
       });
 
       const result = await response.json();
@@ -49,13 +50,22 @@ export default function Register() {
           <div className={styles["text-field"]}>
             <input
               type="text"
-              name="Username/Email"
+              name="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <label>Enter Name</label>
+          <div className={styles["text-field"]}>
+            <input
+              type="text"
+              name="Username"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
-
           <div>
             <label>Enter Password</label>
           </div>

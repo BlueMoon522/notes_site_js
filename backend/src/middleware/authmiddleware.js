@@ -3,17 +3,17 @@ import User from "../models/users.models.js";
 import dotenv from "dotenv";
 dotenv.config();
 const requireAuth = (req, res, next) => {
-  const token = req.cookies.jwt; //jwt is the name of the cookie,viewing/grabing it
+  const token = req.cookies.jwt; //jwt is the name of the cookie,viewing/grabbing it
   if (token) {
     jwt.verify(token, "process.env.SECRET_KEY", (err, decodedToken) => {
       if (err) {
-        res.redirect("/frontendroute");
+        res.redirect("http://localhost:3000/login");
       } else {
         next();
       }
     });
   } else {
-    res.redirect("/frontendroute");
+    res.redirect("http://localhost:3000/login");
   }
 };
 
