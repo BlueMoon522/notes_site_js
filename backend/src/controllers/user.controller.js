@@ -123,6 +123,27 @@ const userController = {
     res.cookie("jwt", "", { maxAge: 1 /*Dies in 1ms */ });
     res.redirect("/");
   },
+
+  //get all user info by id
+  userInfo: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const user = await User.findById(id);
+      console.log(user);
+      if (!user) {
+        return res
+          .status(404)
+          .json({ success: false, message: "User not found" });
+      }
+      const userData = user.toObject(); //changing to plain js Onject
+      delete userData.password; //deleting password section from the tobe sent json
+      res.status(200).json({ success: true, data: userData });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ success: false, message: "Couldnot fetch the userInfo" });
+    }
+  },
 };
 
 export default userController;
