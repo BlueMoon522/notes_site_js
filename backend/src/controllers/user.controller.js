@@ -129,6 +129,7 @@ const userController = {
   //get all user info by id
   userInfo: async (req, res) => {
     try {
+      console.log("Id was given");
       const id = req.params.id;
       const user = await User.findById(id);
       console.log(user);
@@ -137,8 +138,10 @@ const userController = {
           .status(404)
           .json({ success: false, message: "User not found" });
       }
+      console.log("id was found");
       const userData = user.toObject(); //changing to plain js Onject
       delete userData.password; //deleting password section from the tobe sent json
+      console.log(userData);
       res.status(200).json({ success: true, data: userData });
     } catch (error) {
       res
