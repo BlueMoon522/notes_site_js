@@ -1,4 +1,5 @@
 import User from "../models/users.models.js";
+import { verifyToken } from "../middleware/authmiddleware.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
@@ -66,7 +67,7 @@ const userController = {
       res.status(200).json({ user: user._id });
     } catch (error) {
       const errors = handleErrors(error);
-      res.status(400).json({ error });
+      res.status(400).json({ errors });
     }
   },
 
@@ -76,12 +77,13 @@ const userController = {
     try {
       const user = await User.login(email, password);
       const token = createTokens(user._id);
-      console.log(token);
+      // console.log(token);
       res.cookie("jwt", token, {
         httpOnly: true,
         maxAge: maxAge * 1000,
       });
-      console.log(user._id);
+      // console.log(user._id);
+      console.log("User logged in");
       res.status(200).json({ user: user._id, token });
     } catch (error) {
       const errors = handleErrors(error);
@@ -142,6 +144,29 @@ const userController = {
       res
         .status(500)
         .json({ success: false, message: "Couldnot fetch the userInfo" });
+    }
+  },
+
+  verifyToken: async (req, res) => {
+    try {
+      // Extract the token from cookies
+      const token = req.cookies.jwt || req.headers.authorization?.split(" ")[1];
+
+      if (!token) {
+        return res
+          .status(401)
+          .json({ success: false, message: "Token missing" });
+      }
+
+      // Verify the token
+      const decoded = jwt.verify(token, SECRET_KEY);
+
+      // Respond with the user ID from the token
+      res.status(200).json({ success: true, uid: decoded.uid });
+    } catch (error) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Invalid or expired token" });
     }
   },
 };

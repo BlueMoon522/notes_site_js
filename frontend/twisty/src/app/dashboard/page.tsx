@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 const Dashboard = async () => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("jwt");
-
+  console.log(token);
   if (!token) {
     console.log("Redirecting to /login...");
     redirect("/login"); // Ensure no content renders before this call
