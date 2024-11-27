@@ -4,7 +4,10 @@
 import { useState } from "react";
 import styles from "./login.module.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 export default function Register() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
@@ -28,13 +31,17 @@ export default function Register() {
       });
 
       const result = await response.json();
-      if (response.ok && result.message) {
+      if (response.ok) {
+        console.log(result.message);
+        router.push("/login");
         alert("Response from server and result  both fine"); // Show success message from server
-      } else if (!response.ok && result.message) {
-        alert("not ok result from server"); // Show error message from server
       } else {
-        alert("An unexpected response was received.");
+        console.log(result.message);
+        alert("not ok result from server"); // Show error message from server
       }
+      //else {
+      //alert("An unexpected response was received.");
+      //}
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while registering");

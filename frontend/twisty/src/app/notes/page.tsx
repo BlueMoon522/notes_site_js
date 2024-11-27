@@ -1,15 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import DecodeJwt from "../decodejwt";
+import DecodeJwt from "../decodejwt"; // Assuming DecodeJwt is a custom hook
+import styles from "./notes.module.css";
 
 const Page = () => {
-  const [userData, setUserData] = useState(null); // To store the user details
-  const [error, setError] = useState(null); // To store errors, if any
-  const userId = DecodeJwt();
+  const [userData, setUserData] = useState(null); // Store user data
+  const [error, setError] = useState(null); // Store any errors
+  const [activeNote, setActiveNote] = useState(null); // Track the active note for zoom effect
+  const userId = DecodeJwt(); // Decode JWT to get user ID
 
-  // Fetch user data based on the ID
+  // Fetch user data based on the user ID
   useEffect(() => {
-    if (!userId) return; // Guard condition: Skip if userId is null or undefined
+    if (!userId) return; // Skip if userId is not available
 
     const fetchUserData = async () => {
       try {
@@ -17,43 +19,72 @@ const Page = () => {
           `http://localhost:5000/api/users/${userId}`,
           {
             method: "GET",
-            credentials: "include", // Ensures cookies are sent
+            credentials: "include", // Ensure cookies are sent
           }
         );
+
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
 
         const data = await response.json();
-        setUserData(data); // Set the user data
+        setUserData(data); // Update the user data state
       } catch (err) {
-        setError(err.message);
+        setError(err.message); // Set error message in case of failure
       }
     };
 
     fetchUserData();
-  }, [userId]);
-  // Run this effect when userId changes
+  }, [userId]); // Only fetch if userId changes
+
+  const handleNoteClick = (note) => {
+    setActiveNote(note); // Set the clicked note as active
+  };
+
+  const closeNote = () => {
+    setActiveNote(null); // Close the zoomed note
+  };
+
   return (
-    <div>
-      {error && <p>Error: {error}</p>}
+    <div className={styles.pageContainer}>
+      {error && <p className={styles.errorText}>Error: {error}</p>}
 
       {userData ? (
-        <div>
-          <div>
-            <h2>User Details:</h2>
-            <p>Name:{[userData.data.name]}</p>
-            <ul>
+        <div className={styles.container}>
+          {userData.data.notes && userData.data.notes.length > 0 ? (
+            <div className={styles.noteGrid}>
               {userData.data.notes.map((note) => (
-                <li key={note._id}>
-                  <strong>{note.title}:</strong> {note.description}
-                </li>
+                <div
+                  key={note._id}
+                  className={styles.noteItem}
+                  onClick={() => handleNoteClick(note)}
+                >
+                  <div className={styles.noteTitle}>{note.title}</div>
+                  <div className={styles.noteDescription}>
+                    {note.description}
+                  </div>
+                </div>
               ))}
-            </ul>
-          </div>
+            </div>
+          ) : (
+            <p>No notes available.</p>
+          )}
         </div>
       ) : (
         userId && <p>Loading user data...</p>
+      )}
+
+      {activeNote && (
+        <div className={styles.modal} onClick={closeNote}>
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2>{activeNote.title}</h2>
+            <p>{activeNote.description}</p>
+            <button onClick={closeNote}>Close</button>
+          </div>
+        </div>
       )}
     </div>
   );
