@@ -48,7 +48,12 @@
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
-  height: 150px; /* Set fixed height for consistency */
+  height: 150px; /* Fixed height for uniformity */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
 }
 
 /* Title of the note */
@@ -56,12 +61,20 @@
   font-weight: bold;
   font-size: 1.1rem;
   margin-bottom: 10px;
+  white-space: nowrap; /* Prevent wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis for long titles */
 }
 
 /* Description of the note */
 .noteDescription {
   font-size: 0.9rem;
   color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Show only 3 lines of text */
+  -webkit-box-orient: vertical;
 }
 
 /* Zoom effect on hover */

@@ -9,9 +9,8 @@ const Page = () => {
   const [activeNote, setActiveNote] = useState(null); // Track the active note for zoom effect
   const userId = DecodeJwt(); // Decode JWT to get user ID
 
-  // Fetch user data based on the user ID
   useEffect(() => {
-    if (!userId) return; // Skip if userId is not available
+    if (!userId) return;
 
     const fetchUserData = async () => {
       try {
@@ -22,20 +21,20 @@ const Page = () => {
             credentials: "include", // Ensure cookies are sent
           }
         );
-
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
 
         const data = await response.json();
-        setUserData(data); // Update the user data state
+        console.log(data);
+        setUserData(data);
       } catch (err) {
-        setError(err.message); // Set error message in case of failure
+        setError(err.message);
       }
     };
 
     fetchUserData();
-  }, [userId]); // Only fetch if userId changes
+  }, [userId]);
 
   const handleNoteClick = (note) => {
     setActiveNote(note); // Set the clicked note as active
