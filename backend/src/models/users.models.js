@@ -1,6 +1,7 @@
 // users.model.js
 
 import mongoose from "mongoose";
+import Note from "./notes.model.js";
 
 import isEmail from "validator/lib/isEmail.js";
 import bcrypt from "bcrypt";
@@ -31,12 +32,12 @@ const userSchema = new mongoose.Schema(
 
     // Array of ObjectId references to Note documents
 
-    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }],
+    notes: [{ title: String, description: String }],
   },
 
   {
     timestamps: true, // Adds createdAt and updatedAt timestamps
-  }
+  },
 );
 
 //presaving the password to the db use bcrypt(depreciated,change to other encryptions later) to encrypt passwords

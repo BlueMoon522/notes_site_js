@@ -56,8 +56,9 @@ const DecodeJwt = () => {
     };
 
     fetchUserData();
-  }, [userId]); // Run this effect when userId changes
-
+  }, [userId]);
+  // Run this effect when userId changes
+  console.log(userData);
   return (
     <div>
       {error && <p>Error: {error}</p>}
@@ -66,8 +67,18 @@ const DecodeJwt = () => {
 
       {userData ? (
         <div>
-          <h2>User Details:</h2>
-          <pre>{JSON.stringify(userData, null, 2)}</pre>
+          <div>
+            <ul>
+              {userData.data.notes.map((note) => (
+                <li key={note._id}>
+                  <strong>{note.title}:</strong> {note.description}
+                </li>
+              ))}
+            </ul>
+            <h2>User Details:</h2>
+            <p>notes:{[userData.data.name]}</p>
+            <pre>{JSON.stringify(userData, null, 2)}</pre>
+          </div>
         </div>
       ) : (
         userId && <p>Loading user data...</p>

@@ -15,11 +15,12 @@ const noteSchema = new mongoose.Schema(
       // This references the user who created the note
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
   },
   { timestamps: true },
 );
 
-const Note = mongoose.model("Note", noteSchema);
-export default Note;
+// const Note = mongoose.model("Note", noteSchema);
+// export default Note;
+export default noteSchema;

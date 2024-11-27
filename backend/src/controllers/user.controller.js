@@ -1,5 +1,4 @@
 import User from "../models/users.models.js";
-import { verifyToken } from "../middleware/authmiddleware.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
