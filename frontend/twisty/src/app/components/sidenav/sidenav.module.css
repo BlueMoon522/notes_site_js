@@ -1,0 +1,51 @@
+.sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: fill;
+  width: auto;
+  background-color: #a92a2a;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.navList li {
+  margin: 15px 0;
+}
+
+.navList a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.navList a:hover {
+  color: #8161f4;
+}
+
+.navList li:last-child {
+  margin-top: auto; /* Push logout link to the bottom */
+}

@@ -11,5 +11,6 @@ router.delete("/:id", userController.deleteUser);
 router.put("/:id", userController.updateUser);
 router.get("/:id", userController.userInfo);
 router.get("/verifytoken", verifyToken, userController.verifyToken);
+router.post("/logout", userController.logout_post);
 
 export default router;
